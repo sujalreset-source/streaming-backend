@@ -1,0 +1,21 @@
+services:
+  backend:
+    image: resetnetworks/music-backend:latest   # use the image from Docker Hub
+    container_name: music-backend
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "4000:4000"
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7
+    container_name: redis
+    restart: always
+    volumes:
+      - redis-data:/data
+
+volumes:
+  redis-data:

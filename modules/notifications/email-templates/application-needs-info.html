@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>We Need More Information</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f6fa;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 620px;
+        background: #ffffff;
+        margin: 40px auto;
+        padding: 32px;
+        border-radius: 12px;
+        box-shadow: 0 3px 20px rgba(0, 0, 0, 0.05);
+      }
+      .title {
+        font-size: 22px;
+        font-weight: bold;
+        color: #333;
+      }
+      .content {
+        font-size: 16px;
+        line-height: 26px;
+        color: #555;
+      }
+      .btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 26px;
+        background: #ffb63e;
+        color: #fff;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      .footer {
+        margin-top: 30px;
+        text-align: center;
+        font-size: 13px;
+        color: #999;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1 class="title">We Need More Information</h1>
+
+      <div class="content">
+        <p>Hi {{artistName}},</p>
+
+        <p>
+          Our team reviewed your artist application, but we need additional
+          details before we can proceed.
+        </p>
+
+        <p><strong>Notes from reviewer:</strong> {{adminNotes}}</p>
+
+        <p>Please update your application using the link below:</p>
+
+        <a href="{{updateUrl}}" class="btn">Update Application</a>
+
+        <p style="margin-top: 20px">
+          If you have any questions, feel free to reach out anytime.
+        </p>
+      </div>
+
+      <div class="footer">
+        © {{year}} {{brandName}}
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Your Artist Application</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fafafa;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 620px;
+        background: #ffffff;
+        margin: 40px auto;
+        padding: 32px;
+        border-radius: 10px;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.07);
+      }
+      .title {
+        font-size: 20px;
+        font-weight: bold;
+        color: #d63434;
+        margin-bottom: 12px;
+      }
+      .content {
+        font-size: 16px;
+        line-height: 26px;
+        color: #555;
+      }
+      .footer {
+        margin-top: 30px;
+        font-size: 13px;
+        color: #999;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1 class="title">Your Artist Application Was Not Approved</h1>
+
+      <div class="content">
+        <p>Hi {{artistName}},</p>
+
+        <p>
+          We appreciate your interest in joining our artist community. After
+          reviewing your application, our team could not approve it at this
+          time.
+        </p>
+
+        <p><strong>Reason:</strong> {{adminNotes}}</p>
+
+        <p>
+          You are welcome to re-apply later with updated information. If you
+          have any questions, please reach out to our support team.
+        </p>
+      </div>
+
+      <div class="footer">
+        © {{year}} {{brandName}} — All rights reserved.
+      </div>
+    </div>
+  </body>
+</html>

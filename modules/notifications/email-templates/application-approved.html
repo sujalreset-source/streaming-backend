@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Your Artist Application is Approved</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f6fa;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 620px;
+        background: #ffffff;
+        margin: 40px auto;
+        padding: 32px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      }
+      .header {
+        text-align: center;
+        padding-bottom: 20px;
+      }
+      .title {
+        font-size: 22px;
+        font-weight: bold;
+        color: #333333;
+        margin-bottom: 10px;
+      }
+      .content {
+        font-size: 16px;
+        line-height: 26px;
+        color: #555555;
+      }
+      .btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 14px 28px;
+        background-color: #4e8ef7;
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 8px;
+      }
+      .footer {
+        margin-top: 30px;
+        font-size: 13px;
+        color: #999999;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="header">
+        <img
+          src="{{logoUrl}}"
+          alt="Logo"
+          width="120"
+          style="margin-bottom: 16px"
+        />
+        <h1 class="title">🎉 Congratulations {{artistName}}!</h1>
+      </div>
+
+      <div class="content">
+        <p>
+          Your artist application has been <strong>approved</strong> by our
+          review team! You can now start uploading songs, albums, and grow your
+          presence on our platform.
+        </p>
+
+        <p>
+          Your artist profile is now live and ready to go. We’re excited to have
+          you onboard!
+        </p>
+
+        <a href="{{dashboardUrl}}" class="btn">Go to Dashboard</a>
+
+        <p style="margin-top: 25px">
+          If you have any questions, feel free to contact us anytime.
+        </p>
+      </div>
+
+      <div class="footer">
+        © {{year}} {{brandName}} — All rights reserved.
+      </div>
+    </div>
+  </body>
+</html>

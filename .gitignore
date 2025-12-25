@@ -1,0 +1,98 @@
+# ======================================
+# 🌍 ENVIRONMENT & CONFIG FILES
+# ======================================
+.env
+.env.*
+.env*
+!.env.example           # Keep only a sanitized example
+cloudfront-private.pem  # CloudFront private key
+*.pem
+*.key
+*.crt
+*.p12
+
+# ======================================
+# 🧠 DEPENDENCIES & PACKAGE FILES
+# ======================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ======================================
+# 🐳 DOCKER
+# ======================================
+.dockerignore
+docker-compose.override.yml
+docker-compose.dev.yml
+.docker/
+*.pid
+*.bak
+
+# ======================================
+# 🪣 BUILD / DIST / CACHE
+# ======================================
+dist/
+build/
+tmp/
+temp/
+.cache/
+*.log
+logs/
+*.tsbuildinfo
+
+# ======================================
+# ⚙️ SYSTEM / IDE / MISC
+# ======================================
+.DS_Store
+.idea/
+.vscode/
+Thumbs.db
+*.swp
+*.swo
+*.swn
+
+# ======================================
+# 🧪 TESTS & COVERAGE
+# ======================================
+coverage/
+jest-html-reporters-*
+.nyc_output/
+test-results/
+reports/
+
+# ======================================
+# 🔐 CREDENTIALS / SECRETS
+# ======================================
+aws-credentials.json
+serviceAccountKey.json
+firebase-adminsdk.json
+credentials.json
+
+# ======================================
+# 🎵 MEDIA / TEMP FILES (if locally stored)
+# ======================================
+uploads/
+songs/
+covers/
+*.mp3
+*.wav
+*.m4a
+*.zip
+*.tar
+*.gz
+
+# ======================================
+# ⚙️ PROJECT-SPECIFIC EXCLUSIONS
+# ======================================
+queue/
+# (Only if queue stores local jobs or Redis persistence files)
+
+# ======================================
+# 🧭 OPTIONAL (keep only in CI/CD or infra repo)
+# ======================================
+docker-compose.prod.yml   # Add only if it's generated dynamically
+.env*
+.env
+.env

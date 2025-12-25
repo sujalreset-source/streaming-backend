@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Uppy Multipart Upload — Custom Backend</title>
+
+  <link href="https://releases.transloadit.com/uppy/v3.11.0/uppy.min.css" rel="stylesheet">
+  <script src="https://releases.transloadit.com/uppy/v3.11.0/uppy.min.js"></script>
+</head>
+
+<body>
+  <h1>🎵 Uppy Multipart Upload — Custom Backend</h1>
+
+  <div id="uppyUploader"></div>
+
+  <script>
+    const NORMAL_JWT = "Bearer <YOUR_NORMAL_JWT>";
+    let UPLOAD_TOKEN = null;
+    let CURRENT_SESSION_UUID = null;
+    let presignCache = {}; // partNumber → presigned URL
+
+    const uppy = new Uppy.Uppy({
+      debug: true,
+      autoProceed: false,
+    });
+
+    uppy.use(Uppy.Dashboard, {
+      inline: true,
+      target: "#uppyUploader",
+      showProgressDetails: true,
+    });
+
+    uppy.use(Uppy.AwsS3Multipart, {
+      companionUrl: null,
+      uploadPartSize: 8 * 1024 * 1024, // match backend partSize
+
+      // disable signPart fallback
+      signPart() { 
+        throw new Error("signPart should never be called—backend provides presigned URLs.");
+      },
+
+      // 1️⃣ INIT MULTIPART UPLOAD
+      async createMultipartUpload(file) {
+        const res = await fetch("http://localhost:4000/api/v2/uploads/init", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: NORMAL_JWT
+          },
+          body: JSON.stringify({
+            filename: file.name,
+            contentType: file.type,
+            size: file.size,
+            clientUploadUuid: crypto.randomUUID()
+          })
+        });
+
+        const data = await res.json();
+
+        // store tokens
+        UPLOAD_TOKEN = "Bearer " + data.uploadToken;
+        CURRENT_SESSION_UUID = data.sessionUuid;
+
+        // cache first presigned urls
+        for (const part of data.presignFirstParts) {
+          presignCache[part.partNumber] = part.url;
+        }
+
+        return {
+          uploadId: data.uploadId,
+          key: data.s3Key
+        };
+      },
+
+      // 2️⃣ GET PRESIGNED URL FOR ANY PART
+      async prepareUploadPart(file, part) {
+        const partNum = part.partNumber;
+
+        // If backend already gave this part URL → use it
+        if (presignCache[partNum]) {
+          return { url: presignCache[partNum] };
+        }
+
+        // otherwise fetch from backend
+        const url = `http://localhost:4000/api/v2/uploads/presign-part` +
+          `?uploadId=${part.uploadId}` +
+          `&key=${part.key}` +
+          `&partNumber=${partNum}`;
+
+        const res = await fetch(url, {
+          headers: { Authorization: UPLOAD_TOKEN }
+        });
+
+        const data = await res.json();
+        return { url: data.url };
+      },
+
+      // 3️⃣ COMPLETE UPLOAD
+      async completeMultipartUpload(file, data) {
+        data.sessionUuid = CURRENT_SESSION_UUID;
+
+        const res = await fetch("http://localhost:4000/api/v2/uploads/complete", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: UPLOAD_TOKEN
+          },
+          body: JSON.stringify(data),
+        });
+
+        return res.json();
+      },
+
+      // 4️⃣ ABORT UPLOAD
+      async abortMultipartUpload(file, data) {
+        data.sessionUuid = CURRENT_SESSION_UUID;
+
+        await fetch("http://localhost:4000/api/v2/uploads/abort", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: UPLOAD_TOKEN
+          },
+          body: JSON.stringify(data)
+        });
+      }
+    });
+
+    uppy.on("complete", (result) => {
+      console.log("🎉 Upload complete:", result);
+      alert("Upload complete! Check console.");
+    });
+  </script>
+
+</body>
+</html>
