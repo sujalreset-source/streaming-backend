@@ -4,12 +4,13 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon server.js",
-    "start": "node server.js",
-    "test": "NODE_OPTIONS=--experimental-vm-modules NODE_ENV=test jest --runInBand",
-    "test:watch": "NODE_ENV=test jest --watch",
-    "test:coverage": "NODE_ENV=test jest --coverage --runInBand"
-  },
+  "dev": "nodemon server.js",
+  "start": "node server.js",
+  "build": "echo 'No build step required for Node.js backend'",
+  "test": "NODE_OPTIONS=--experimental-vm-modules NODE_ENV=test jest --runInBand",
+  "test:watch": "NODE_ENV=test jest --watch",
+  "test:coverage": "NODE_ENV=test jest --coverage --runInBand"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
